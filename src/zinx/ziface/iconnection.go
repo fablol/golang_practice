@@ -1,10 +1,10 @@
 package ziface
 
-import(
+import (
 	"net"
 )
 
-type IConnection interface{
+type IConnection interface {
 	Start()
 	Stop()
 	GetTCPConnection() *net.TCPConn
@@ -13,4 +13,4 @@ type IConnection interface{
 	Send(data []byte) error
 }
 
-type HandleFunc func(*net.TCPConn,[]byte,int) error
+type HandleFunc func(*net.TCPConn, []byte, int) error
