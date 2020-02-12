@@ -1,1 +1,1 @@
-# zinx_practice
+# golang_practice
