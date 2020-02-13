@@ -1,9 +1,10 @@
 package znet
 
 import (
-	"errors"
+	// "errors"
 	"fmt"
 	"net"
+	"zinx/utils"
 	"zinx/ziface"
 )
 
@@ -57,18 +58,10 @@ type Server struct {
 	Router ziface.IRouter
 }
 
-// func EchoToClient(conn *net.TCPConn, data []byte, count int) error {
-// 	fmt.Printf("[EchoToClient] EchoToClient.... \n")
-// 	if _, err := conn.Write(data[:count]); err != nil {
-// 		fmt.Println("[EchoToClient]write data err", err)
-// 		return errors.New("EchoToClient")
-// 	}
-// 	return nil
-// }
-
 func (s *Server) Start() {
 	// get tcp addr
-	fmt.Printf("[Start] Server Listerner at IP :%s, Port %d, is starting\n", s.IP, s.Port)
+	fmt.Printf("[Zinx] server name : %s, listenner : %s, Port : %d \n", utils.GlobalObject.Name, utils.GlobalObject.Host, utils.GlobalObject.TcpPort)
+	fmt.Printf("[Zinx] server version : %s \n", utils.GlobalObject.Version)
 
 	go func() {
 		addr, err := net.ResolveTCPAddr(s.IPVersion, fmt.Sprintf("%s:%d", s.IP, s.Port))
@@ -93,24 +86,6 @@ func (s *Server) Start() {
 				fmt.Println("Accept err", err)
 				continue
 			}
-			// do
-			// echo 512byte message
-			// go func() {
-			// 	for {
-			// 		buf := make([]byte, 512)
-			// 		count, err := conn.Read(buf)
-			// 		if err != nil {
-			// 			fmt.Println("recv buf err", err)
-			// 		}
-
-			// 		//echo
-			// 		fmt.Printf("server recv : %s, count : %d \n", buf, count)
-			// 		if _, err := conn.Write(buf[:count]); err != nil {
-			// 			fmt.Println("echo buff err", err)
-			// 			continue
-			// 		}
-			// 	}
-			// }()
 
 			handle_conn := NewConnection(conn, cid, s.Router)
 			cid++
@@ -138,10 +113,10 @@ func (s *Server) AddRouter(router ziface.IRouter) {
 // init
 func NewServer(name string) ziface.IServer {
 	s := &Server{
-		Name:      name,
+		Name:      utils.GlobalObject.Name,
 		IPVersion: "tcp4",
-		IP:        "0.0.0.0",
-		Port:      8999,
+		IP:        utils.GlobalObject.Host,
+		Port:      utils.GlobalObject.TcpPort,
 		Router:    nil,
 	}
 	return s
