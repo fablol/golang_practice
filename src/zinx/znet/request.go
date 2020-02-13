@@ -13,9 +13,9 @@ type Request struct {
 }
 
 func (r *Request) GetConnection() ziface.IConnection {
-
+	return r.conn
 }
 
 func (r *Request) GetData() []byte {
-
+	return r.data
 }

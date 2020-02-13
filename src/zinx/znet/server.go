@@ -53,16 +53,18 @@ type Server struct {
 	IP string
 	// port
 	Port int
+	// router
+	Router ziface.IRouter
 }
 
-func EchoToClient(conn *net.TCPConn, data []byte, count int) error {
-	fmt.Printf("[EchoToClient] EchoToClient.... \n")
-	if _, err := conn.Write(data[:count]); err != nil {
-		fmt.Println("[EchoToClient]write data err", err)
-		return errors.New("EchoToClient")
-	}
-	return nil
-}
+// func EchoToClient(conn *net.TCPConn, data []byte, count int) error {
+// 	fmt.Printf("[EchoToClient] EchoToClient.... \n")
+// 	if _, err := conn.Write(data[:count]); err != nil {
+// 		fmt.Println("[EchoToClient]write data err", err)
+// 		return errors.New("EchoToClient")
+// 	}
+// 	return nil
+// }
 
 func (s *Server) Start() {
 	// get tcp addr
@@ -110,7 +112,7 @@ func (s *Server) Start() {
 			// 	}
 			// }()
 
-			handle_conn := NewConnection(conn, cid, EchoToClient)
+			handle_conn := NewConnection(conn, cid, s.Router)
 			cid++
 			// start
 			go handle_conn.Start()
@@ -128,6 +130,11 @@ func (s *Server) Serve() {
 	select {}
 }
 
+func (s *Server) AddRouter(router ziface.IRouter) {
+	s.Router = router
+	fmt.Println("add router sucess")
+}
+
 // init
 func NewServer(name string) ziface.IServer {
 	s := &Server{
@@ -135,6 +142,7 @@ func NewServer(name string) ziface.IServer {
 		IPVersion: "tcp4",
 		IP:        "0.0.0.0",
 		Port:      8999,
+		Router:    nil,
 	}
 	return s
 }
