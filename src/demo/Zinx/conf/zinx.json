@@ -1,6 +1,7 @@
 {
-    "Name": "Zinx Server Demo v0.4",
+    "Name": "Zinx Server Demo v0.5",
     "Host": "0.0.0.0",
     "TcpPort": 8999,
-    "MaxConn": 3
+    "MaxConn": 3,
+    "Version":"V0.5"
 }

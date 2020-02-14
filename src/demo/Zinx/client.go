@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"time"
-	"zinx/utils"
+	"zinx/znet"
 )
 
 func main() {
@@ -18,20 +19,43 @@ func main() {
 	}
 
 	for {
-		// write
-		_, err := conn.Write([]byte("hello, sb"))
+		// write packed msg
+		dp := znet.NewDataPack()
+		msg, err := dp.Pack(znet.NewMsgPackage(0, []byte("ZinxV0.5 client test message")))
+
 		if err != nil {
-			fmt.Println("write buff err ", err)
-			return
+			fmt.Println("pack msg err ", err)
+			break
 		}
 
-		buf := make([]byte, utils.GlobalObject.MaxPackageSize)
-		count, err := conn.Read(buf)
-		if err != nil {
-			fmt.Println("read buff err ", err)
-			return
+		if _, err := conn.Write(msg); err != nil {
+			fmt.Println("write msg err ", err)
+			break
 		}
-		fmt.Printf("server echo : %s, count : %d \n", buf, count)
+		// read head
+		headData := make([]byte, dp.GetHeadLen())
+		if _, err := io.ReadFull(conn, headData); err != nil {
+			fmt.Println("read msg head error : ", err)
+			break
+		}
+		// unpack
+		msgHead, err := dp.Unpack(headData)
+		if err != nil {
+			fmt.Println("unpack msg head error : ", err)
+			break
+		}
+
+		if msgHead.GetMsgLen() > 0 {
+			// read body
+			msg := msgHead.(*znet.Message)
+			msg.Data = make([]byte, msg.GetMsgLen())
+
+			if _, err := io.ReadFull(conn, msg.Data); err != nil {
+				fmt.Println("read msg body error : ", err)
+				break
+			}
+			fmt.Printf("----> server echo ID: %d, data : %s \n", msg.ID, msg.Data)
+		}
 
 		time.Sleep(3 * time.Second)
 	}

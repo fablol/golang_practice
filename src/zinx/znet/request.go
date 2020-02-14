@@ -9,7 +9,7 @@ type Request struct {
 	// connection
 	conn ziface.IConnection
 	// data
-	data []byte
+	msg ziface.IMessage
 }
 
 func (r *Request) GetConnection() ziface.IConnection {
@@ -17,5 +17,9 @@ func (r *Request) GetConnection() ziface.IConnection {
 }
 
 func (r *Request) GetData() []byte {
-	return r.data
+	return r.msg.GetMsgData()
+}
+
+func (r *Request) GetMsgID() uint32 {
+	return r.msg.GetMsgID()
 }
