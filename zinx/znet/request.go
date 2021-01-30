@@ -1,7 +1,7 @@
 package znet
 
 import (
-	"zinx/ziface"
+	"golang_practice/zinx/ziface"
 )
 
 // Request inface

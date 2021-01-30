@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"zinx/utils"
-	"zinx/ziface"
-	"zinx/znet"
+	"golang_practice/zinx/utils"
+	"golang_practice/zinx/ziface"
+	"golang_practice/zinx/znet"
 )
 
 /*

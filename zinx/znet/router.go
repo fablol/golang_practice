@@ -3,7 +3,7 @@ package znet
 import (
 	// "fmt"
 	// "net"
-	"zinx/ziface"
+	"golang_practice/zinx/ziface"
 )
 
 type BaseRouter struct{}

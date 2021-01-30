@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"zinx/utils"
-	"zinx/ziface"
+	"golang_practice/zinx/utils"
+	"golang_practice/zinx/ziface"
 )
 
 // unpack

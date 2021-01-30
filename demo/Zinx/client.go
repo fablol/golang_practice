@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"golang_practice/zinx/znet"
 	"io"
 	"net"
 	"time"
-	"zinx/znet"
 )
 
 func main() {

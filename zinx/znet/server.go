@@ -3,9 +3,9 @@ package znet
 import (
 	// "errors"
 	"fmt"
+	"golang_practice/zinx/utils"
+	"golang_practice/zinx/ziface"
 	"net"
-	"zinx/utils"
-	"zinx/ziface"
 )
 
 /***

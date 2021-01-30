@@ -3,9 +3,9 @@ package znet
 import (
 	"errors"
 	"fmt"
+	"golang_practice/zinx/ziface"
 	"io"
 	"net"
-	"zinx/ziface"
 )
 
 type Connection struct {

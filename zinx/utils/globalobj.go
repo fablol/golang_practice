@@ -3,9 +3,10 @@ package utils
 import (
 	"encoding/json"
 	"io/ioutil"
+
 	// "os"
-	"zinx/ziface"
-	// "zinx/zlog"
+	"golang_practice/zinx/ziface"
+	// "golang_practice/zinx/zlog"
 )
 
 // storage zinx config
